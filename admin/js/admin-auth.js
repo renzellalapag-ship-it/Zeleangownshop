@@ -18,6 +18,7 @@ window.AdminAuth = (function () {
   "use strict";
 
   let _client = null;
+  let _lastAdminCheck = "Admin role check has not run.";
 
   /** Read the Supabase settings from config; null if still placeholders. */
   function cfg() {
@@ -70,7 +71,8 @@ window.AdminAuth = (function () {
     const sb = client();
 
     if (!sb || !userId) {
-      console.error("[AdminAuth] Supabase client or user ID is missing.");
+      _lastAdminCheck = "Supabase client or user ID is missing. Check the deployed config and scripts.";
+      console.error("[AdminAuth] " + _lastAdminCheck);
       return false;
     }
 
@@ -83,6 +85,7 @@ window.AdminAuth = (function () {
 
       if (error) {
         // Safe to log database error metadata; never log passwords or tokens.
+        _lastAdminCheck = "admin_roles query error " + (error.code || "no code") + ": " + (error.message || "No message");
         console.error("[AdminAuth] admin_roles lookup failed:", {
           code: error.code,
           message: error.message,
@@ -93,13 +96,16 @@ window.AdminAuth = (function () {
       }
 
       if (!data) {
+        _lastAdminCheck = "Supabase returned no visible admin_roles row for the signed-in user. Check that the row user_id exactly matches this Auth user UUID and that the live project is the expected project.";
         console.warn("[AdminAuth] No admin_roles row visible for authenticated user:", userId);
         return false;
       }
 
+      _lastAdminCheck = "Admin role verified.";
       console.info("[AdminAuth] Admin role verified.");
       return true;
     } catch (e) {
+      _lastAdminCheck = "Unexpected role lookup error: " + (e && e.message ? e.message : "unknown error");
       console.error("[AdminAuth] Unexpected role lookup error:", e && e.message ? e.message : e);
       return false;
     }
@@ -139,7 +145,7 @@ window.AdminAuth = (function () {
       try { await sb.auth.signOut(); } catch (e) {}
       return {
         ok: false,
-        error: "This account is not authorized to access the admin dashboard.",
+        error: "This account is not authorized to access the admin dashboard. Diagnostic: " + _lastAdminCheck,
       };
     }
     return { ok: true, user: data.user };
