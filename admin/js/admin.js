@@ -40,7 +40,31 @@ window.AdminDashboard = (function () {
       logout: document.getElementById("logout-btn"),
       sidebar: document.getElementById("sidebar"),
       sidebarToggle: document.getElementById("sidebar-toggle"),
+      backdrop: document.getElementById("admin-backdrop"),
     };
+  }
+
+  /** Open the mobile drawer + show its backdrop. */
+  function openSidebar() {
+    if (!els.sidebar) return;
+    els.sidebar.classList.add("is-open");
+    if (els.backdrop) els.backdrop.classList.add("is-visible");
+  }
+
+  /** Close the mobile drawer + hide its backdrop. */
+  function closeSidebar() {
+    if (!els.sidebar) return;
+    els.sidebar.classList.remove("is-open");
+    if (els.backdrop) els.backdrop.classList.remove("is-visible");
+  }
+
+  /** Toggle the mobile drawer open/closed. */
+  function toggleSidebar() {
+    if (els.sidebar && els.sidebar.classList.contains("is-open")) {
+      closeSidebar();
+    } else {
+      openSidebar();
+    }
   }
 
   function computeStats(products) {
@@ -289,10 +313,26 @@ window.AdminDashboard = (function () {
       });
     }
     if (els.sidebarToggle) {
-      els.sidebarToggle.addEventListener("click", function () {
-        els.sidebar.classList.toggle("is-open");
+      els.sidebarToggle.addEventListener("click", toggleSidebar);
+    }
+    // Mobile: tap the dimmed backdrop to dismiss the drawer.
+    if (els.backdrop) {
+      els.backdrop.addEventListener("click", closeSidebar);
+    }
+    // Mobile: tapping a sidebar link should close the drawer behind you.
+    if (els.sidebar) {
+      els.sidebar.querySelectorAll("a").forEach(function (link) {
+        link.addEventListener("click", closeSidebar);
       });
     }
+    // Escape closes the drawer (nice on tablets with keyboards too).
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeSidebar();
+    });
+    // If the window grows to desktop width, make sure no stale open state remains.
+    window.addEventListener("resize", function () {
+      if (window.innerWidth > 860) closeSidebar();
+    });
   }
 
   function init() {
