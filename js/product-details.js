@@ -29,8 +29,6 @@ window.ZeleanProductDetails = (function () {
       colors: document.getElementById("detail-colors"),
       fabric: document.getElementById("detail-fabric"),
       fabricRow: document.getElementById("detail-fabric-row"),
-      deposit: document.getElementById("detail-deposit"),
-      depositRow: document.getElementById("detail-deposit-row"),
       replacement: document.getElementById("detail-replacement"),
       replacementRow: document.getElementById("detail-replacement-row"),
       duration: document.getElementById("detail-duration"),
@@ -110,32 +108,44 @@ window.ZeleanProductDetails = (function () {
 
   function renderPrices() {
     els.priceBlock.innerHTML = "";
-    const rows = [];
+
+    // Build one uniform price panel per applicable value. Rental and sale are
+    // optional (a product may be rent-only, sale-only, or both). The security
+    // deposit is shown whenever it has been supplied so pricing is transparent.
+    const panels = [];
     if (typeof product.rental_price === "number") {
-      rows.push({ label: "Rental price", value: U.formatPHP(product.rental_price) });
+      panels.push({ label: "Rental", value: U.formatPHP(product.rental_price) });
     }
     if (typeof product.sale_price === "number") {
-      rows.push({ label: "Sale price", value: U.formatPHP(product.sale_price) });
+      panels.push({ label: "Sale", value: U.formatPHP(product.sale_price) });
     }
-    if (!rows.length) {
+    if (typeof product.deposit_required === "number") {
+      panels.push({ label: "Security deposit", value: U.formatPHP(product.deposit_required) });
+    }
+
+    if (!panels.length) {
       const p = document.createElement("p");
       p.className = "detail-price__note";
       p.textContent = "Please inquire for pricing.";
       els.priceBlock.appendChild(p);
       return;
     }
-    rows.forEach((r) => {
-      const line = document.createElement("p");
-      line.className = "detail-price__line";
+
+    panels.forEach(function (item) {
+      const panel = document.createElement("div");
+      panel.className = "price-panel";
+
       const label = document.createElement("span");
-      label.className = "detail-price__label";
-      label.textContent = r.label;
+      label.className = "price-panel__label";
+      label.textContent = item.label;
+
       const value = document.createElement("span");
-      value.className = "detail-price__value";
-      value.textContent = r.value;
-      line.appendChild(label);
-      line.appendChild(value);
-      els.priceBlock.appendChild(line);
+      value.className = "price-panel__value";
+      value.textContent = item.value;
+
+      panel.appendChild(label);
+      panel.appendChild(value);
+      els.priceBlock.appendChild(panel);
     });
   }
 
@@ -169,15 +179,8 @@ window.ZeleanProductDetails = (function () {
         els.fabricRow.classList.add("hidden");
       }
     }
-    // Deposit + replacement value are money, so reuse formatPHP.
-    if (els.deposit && els.depositRow) {
-      if (typeof product.deposit_required === "number") {
-        els.deposit.textContent = U.formatPHP(product.deposit_required);
-        els.depositRow.classList.remove("hidden");
-      } else {
-        els.depositRow.classList.add("hidden");
-      }
-    }
+    // Replacement value is money, so reuse formatPHP. (Deposit now renders as a
+    // price panel above, so it is no longer handled here.)
     if (els.replacement && els.replacementRow) {
       if (typeof product.replacement_value === "number") {
         els.replacement.textContent = U.formatPHP(product.replacement_value);

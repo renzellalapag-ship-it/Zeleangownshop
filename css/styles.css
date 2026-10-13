@@ -765,30 +765,46 @@ h1, h2, h3, h4 {
   margin-bottom: var(--space-md);
 }
 .detail-price {
-  background: var(--color-cream);
-  border-radius: var(--radius-md);
-  padding: var(--space-sm) var(--space-md);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: var(--space-2xs);
   margin-bottom: var(--space-md);
 }
-.detail-price__line {
+/* Uniform price panels: Rental / Sale / Security deposit. Each panel stacks a
+   small label above a bold, larger price. Panels size to their content and sit
+   compactly together instead of stretching across the whole column. */
+.price-panel {
+  flex: 0 1 110px;
+  min-width: 92px;
+  background: var(--color-cream);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-xs) var(--space-2xs);
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--space-sm);
-  padding-block: var(--space-3xs);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  text-align: center;
 }
-.detail-price__label {
+.price-panel__label {
   color: var(--color-muted);
-  font-size: var(--fs-sm);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  line-height: 1.2;
 }
-.detail-price__value {
+.price-panel__value {
   font-family: var(--font-heading);
-  font-size: var(--fs-xl);
-  color: var(--color-brown);
-  font-weight: 600;
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--color-brown-dark);
+  line-height: 1.1;
 }
 .detail-price__note {
   color: var(--color-muted);
+  flex-basis: 100%;
 }
 .detail-description {
   color: var(--color-text);
