@@ -780,9 +780,10 @@ h1, h2, h3, h4 {
   gap: 0.1rem;
 }
 .price-panel__label {
-  color: var(--color-muted);
-  font-size: var(--fs-xs);
-  letter-spacing: 0.14em;
+  color: var(--color-brown-dark);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 .price-panel__value {

@@ -120,7 +120,7 @@ window.ZeleanProductDetails = (function () {
       panels.push({ label: "Sale", value: U.formatPHP(product.sale_price) });
     }
     if (typeof product.deposit_required === "number") {
-      panels.push({ label: "Security deposit", value: U.formatPHP(product.deposit_required) });
+      panels.push({ label: "Security deposit required", value: U.formatPHP(product.deposit_required) });
     }
 
     if (!panels.length) {
