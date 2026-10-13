@@ -262,6 +262,52 @@ table.data-table tr:hover td { background: #fbf8f5; }
 .field-error { color: var(--admin-danger); font-size: 0.78rem; }
 .field-hint { color: var(--admin-muted); font-size: 0.75rem; }
 
+/* --------------------------------------------------------------------------
+   Product image rows (URL + upload)
+   -------------------------------------------------------------------------- */
+.image-row {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  padding: 0.7rem;
+  border: 1px solid var(--admin-border);
+  border-radius: 10px;
+  margin-bottom: 0.6rem;
+  background: #faf7f4;
+}
+.image-row__preview {
+  width: 72px;
+  height: 72px;
+  flex: 0 0 72px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--admin-border);
+  background: #fff;
+}
+.image-row__fields {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.image-row__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.image-row__status { font-size: 0.75rem; color: var(--admin-muted); }
+.image-row__status.is-uploading { color: var(--admin-warning); }
+.image-row__status.is-success { color: var(--admin-success); }
+.image-row__status.is-error { color: var(--admin-danger); }
+.btn-danger-outline { color: var(--admin-danger); }
+.btn[disabled] { opacity: 0.55; cursor: not-allowed; }
+@media (max-width: 560px) {
+  .image-row { flex-direction: column; }
+  .image-row__preview { width: 100%; height: 140px; flex-basis: auto; }
+}
+
 
 /* --------------------------------------------------------------------------
    Modal

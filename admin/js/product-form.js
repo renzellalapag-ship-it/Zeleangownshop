@@ -188,36 +188,188 @@ window.AdminProductForm = (function () {
   }
 
 
+  // Allowed upload types + a sane size cap (5 MB).
+  const UPLOAD_ACCEPT = "image/jpeg,image/jpg,image/png,image/webp";
+  const UPLOAD_MAX_BYTES = 5 * 1024 * 1024;
+  const UPLOAD_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+
+  function extFor(file) {
+    const byMime = { "image/jpeg": "jpg", "image/jpg": "jpg", "image/png": "png", "image/webp": "webp" };
+    if (byMime[file.type]) return byMime[file.type];
+    const m = String(file.name || "").match(/\.([a-z0-9]+)$/i);
+    return m ? m[1].toLowerCase() : "jpg";
+  }
+
+  function storageBucket() {
+    const cfg = window.ZELEAN_CONFIG && window.ZELEAN_CONFIG.supabase;
+    return (cfg && cfg.storageBucket) || "zelean-products";
+  }
+
+  /** Update (or clear) the preview thumbnail for an image row. */
+  function setPreview(row, url) {
+    const img = row.querySelector("[data-image-preview]");
+    if (!img) return;
+    if (url) {
+      img.src = url;
+      img.classList.remove("hidden");
+    } else {
+      img.removeAttribute("src");
+      img.classList.add("hidden");
+    }
+  }
+
+  function setStatus(row, message, kind) {
+    const el = row.querySelector("[data-image-status]");
+    if (!el) return;
+    el.textContent = message || "";
+    el.classList.remove("is-uploading", "is-error", "is-success");
+    if (kind) el.classList.add("is-" + kind);
+  }
+
+  /**
+   * Upload a selected file to Supabase Storage and fill the row's URL input +
+   * preview. Handles validation, loading state, and errors.
+   */
+  function uploadImage(file, row) {
+    const urlInput = row.querySelector("[data-image-url]");
+    const uploadBtn = row.querySelector("[data-upload-btn]");
+
+    if (!file) return;
+
+    // 1) Validate type.
+    if (UPLOAD_TYPES.indexOf(file.type) === -1) {
+      setStatus(row, "Unsupported file type. Use JPG, PNG, or WEBP.", "error");
+      return;
+    }
+    // 2) Validate size.
+    if (file.size > UPLOAD_MAX_BYTES) {
+      setStatus(row, "Image is too large (max 5 MB).", "error");
+      return;
+    }
+
+    // 3) Need the authenticated Supabase client.
+    const client = window.AdminAuth && window.AdminAuth.getClient && window.AdminAuth.getClient();
+    if (!client) {
+      setStatus(row, "Upload unavailable — Supabase is not configured.", "error");
+      return;
+    }
+
+    // 4) Build a readable, collision-safe path: <sku-or-id>/<sku-or-id>-<ts>.<ext>
+    const skuField = document.querySelector('#modal-root [name="sku"]');
+    const skuRaw = skuField ? skuField.value.trim() : "";
+    const folder = skuRaw ? U.slugify(skuRaw) || "product" : "uploads-" + U.uid("tmp");
+    const ext = extFor(file);
+    const objectName = folder + "-" + Date.now() + "." + ext;
+    const path = folder + "/" + objectName;
+
+    // 5) Show loading, disable the button.
+    setStatus(row, "Uploading…", "uploading");
+    if (uploadBtn) uploadBtn.disabled = true;
+
+    client.storage
+      .from(storageBucket())
+      .upload(path, file, { cacheControl: "3600", upsert: true })
+      .then(function (result) {
+        if (uploadBtn) uploadBtn.disabled = false;
+        if (result.error) {
+          setStatus(row, "Upload failed: " + result.error.message, "error");
+          return;
+        }
+        const pub = client.storage.from(storageBucket()).getPublicUrl(result.data.path);
+        const publicUrl = (pub && pub.data && pub.data.publicUrl) || "";
+        if (!publicUrl) {
+          setStatus(row, "Upload finished but no URL was returned.", "error");
+          return;
+        }
+        urlInput.value = publicUrl;
+        setPreview(row, publicUrl);
+        setStatus(row, "Uploaded ✓", "success");
+      })
+      .catch(function (err) {
+        if (uploadBtn) uploadBtn.disabled = false;
+        setStatus(row, "Upload failed: " + (err && err.message ? err.message : "unknown error"), "error");
+      });
+  }
+
   function addImageRow(container, image) {
     const row = document.createElement("div");
     row.className = "image-row";
-    row.style.cssText =
-      "display:grid; grid-template-columns: 1fr 1fr auto; gap:0.5rem; margin-bottom:0.5rem; align-items:center;";
+
+    // Preview thumbnail (left).
+    const preview = document.createElement("img");
+    preview.className = "image-row__preview hidden";
+    preview.setAttribute("data-image-preview", "");
+    preview.alt = "Image preview";
+    row.appendChild(preview);
+
+    // Fields column (right).
+    const fields = document.createElement("div");
+    fields.className = "image-row__fields";
 
     const urlInput = document.createElement("input");
     urlInput.className = "input";
     urlInput.type = "text";
-    urlInput.placeholder = "Image URL or local path";
+    urlInput.placeholder = "Image URL (paste) or upload below";
     urlInput.setAttribute("data-image-url", "");
+    urlInput.setAttribute("aria-label", "Image URL");
     if (image && image.url) urlInput.value = image.url;
+    // Live preview when a URL is typed/pasted.
+    urlInput.addEventListener("input", function () { setPreview(row, urlInput.value.trim()); });
+    fields.appendChild(urlInput);
 
     const altInput = document.createElement("input");
     altInput.className = "input";
     altInput.type = "text";
-    altInput.placeholder = "Alt text";
+    altInput.placeholder = "Alt text (optional)";
     altInput.setAttribute("data-image-alt", "");
+    altInput.setAttribute("aria-label", "Alt text");
     if (image && image.alt) altInput.value = image.alt;
+    fields.appendChild(altInput);
+
+    // Actions row: upload button + hidden file input + status + remove.
+    const actions = document.createElement("div");
+    actions.className = "image-row__actions";
+
+    const uploadBtn = document.createElement("button");
+    uploadBtn.type = "button";
+    uploadBtn.className = "btn btn-outline btn-sm";
+    uploadBtn.textContent = "Upload Image";
+    uploadBtn.setAttribute("data-upload-btn", "");
+
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = UPLOAD_ACCEPT;
+    fileInput.className = "hidden";
+    fileInput.setAttribute("data-file-input", "");
+
+    uploadBtn.addEventListener("click", function () { fileInput.click(); });
+    fileInput.addEventListener("change", function () {
+      if (fileInput.files && fileInput.files[0]) uploadImage(fileInput.files[0], row);
+      fileInput.value = ""; // allow re-selecting the same file
+    });
+
+    const status = document.createElement("span");
+    status.className = "image-row__status";
+    status.setAttribute("data-image-status", "");
+    status.setAttribute("role", "status");
 
     const removeBtn = document.createElement("button");
     removeBtn.type = "button";
-    removeBtn.className = "btn btn-outline btn-sm";
+    removeBtn.className = "btn btn-outline btn-sm btn-danger-outline";
     removeBtn.textContent = "Remove";
     removeBtn.addEventListener("click", function () { row.remove(); });
 
-    row.appendChild(urlInput);
-    row.appendChild(altInput);
-    row.appendChild(removeBtn);
+    actions.appendChild(uploadBtn);
+    actions.appendChild(fileInput);
+    actions.appendChild(status);
+    actions.appendChild(removeBtn);
+    fields.appendChild(actions);
+
+    row.appendChild(fields);
     container.appendChild(row);
+
+    // Show an existing image preview right away (for edits).
+    if (image && image.url) setPreview(row, image.url);
   }
 
   /**
@@ -307,7 +459,7 @@ window.AdminProductForm = (function () {
     const imgHint = document.createElement("span");
     imgHint.className = "field-hint";
     imgHint.textContent =
-      "Demo build: paste image URLs or local sample paths. Supabase uploads are added when configured.";
+      "Upload an image (JPG, PNG, or WEBP, max 5 MB) to Supabase Storage, or paste an image URL. You can use either — the first image is the main one.";
     imgSection.appendChild(imgHint);
     const imgList = document.createElement("div");
     imgList.id = "pf-image-list";

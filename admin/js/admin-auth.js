@@ -149,6 +149,7 @@ window.AdminAuth = (function () {
 
   return {
     isConfigured,
+    getClient: client,
     currentUser,
     isAdmin,
     isSignedIn,
