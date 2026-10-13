@@ -98,8 +98,11 @@
   <!-- Toast host -->
   <div id="toast-root"></div>
 
-  <!-- Admin scripts: shared helpers → auth → data (mock) → dashboard → form -->
+  <!-- Admin scripts: config → Supabase lib → helpers → auth → data → dashboard → form -->
+  <!-- config.js + Supabase library must load before admin-auth.js so real auth works. -->
   <!-- sample-data.js provides the seed products for the demo store. -->
+  <script src="../js/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../js/sample-data.js"></script>
   <script src="js/admin-utils.js"></script>
   <script src="js/admin-auth.js"></script>

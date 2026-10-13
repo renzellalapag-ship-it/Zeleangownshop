@@ -281,16 +281,20 @@ window.AdminDashboard = (function () {
   }
 
   function init() {
-    if (!window.AdminAuth.requireAuth()) return;
-    cacheEls();
-    window.AdminData.load();
-    populateCategoryFilter(window.AdminData.all());
-    bindEvents();
-    window.AdminData.onChange(function (products) {
-      populateCategoryFilter(products);
-      renderAll(products);
+    // requireAuth() is async (checks Supabase session + admin_roles). Wait for it,
+    // then boot the dashboard only if access is allowed; otherwise it redirects.
+    window.AdminAuth.requireAuth().then(function (allowed) {
+      if (!allowed) return;
+      cacheEls();
+      window.AdminData.load();
+      populateCategoryFilter(window.AdminData.all());
+      bindEvents();
+      window.AdminData.onChange(function (products) {
+        populateCategoryFilter(products);
+        renderAll(products);
+      });
+      renderAll(window.AdminData.all());
     });
-    renderAll(window.AdminData.all());
   }
 
   return { init };
