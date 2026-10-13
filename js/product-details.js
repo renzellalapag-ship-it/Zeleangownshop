@@ -20,12 +20,19 @@ window.ZeleanProductDetails = (function () {
       galleryMain: document.getElementById("gallery-main-image"),
       galleryThumbs: document.getElementById("gallery-thumbs"),
       category: document.getElementById("detail-category"),
+      subCategory: document.getElementById("detail-subcategory"),
       name: document.getElementById("detail-name"),
       sku: document.getElementById("detail-sku"),
       description: document.getElementById("detail-description"),
       priceBlock: document.getElementById("detail-prices"),
       sizes: document.getElementById("detail-sizes"),
       colors: document.getElementById("detail-colors"),
+      fabric: document.getElementById("detail-fabric"),
+      fabricRow: document.getElementById("detail-fabric-row"),
+      deposit: document.getElementById("detail-deposit"),
+      depositRow: document.getElementById("detail-deposit-row"),
+      replacement: document.getElementById("detail-replacement"),
+      replacementRow: document.getElementById("detail-replacement-row"),
       duration: document.getElementById("detail-duration"),
       availability: document.getElementById("detail-availability"),
       inquiry: document.getElementById("detail-inquiry"),
@@ -135,6 +142,16 @@ window.ZeleanProductDetails = (function () {
   function render() {
     document.title = product.name + " — Zelean Gowns";
     if (els.category) els.category.textContent = product.category;
+    if (els.subCategory) {
+      // Show "Category · Sub-category" when a sub-category exists, else hide.
+      const sub = (product.sub_category || "").trim();
+      if (sub) {
+        els.subCategory.textContent = product.category + " · " + sub;
+        els.subCategory.classList.remove("hidden");
+      } else {
+        els.subCategory.classList.add("hidden");
+      }
+    }
     if (els.name) els.name.textContent = product.name;
     if (els.sku) els.sku.textContent = product.sku;
     if (els.description) els.description.textContent = product.description || "";
@@ -142,6 +159,33 @@ window.ZeleanProductDetails = (function () {
     setGallery();
     renderChips(els.sizes, product.sizes);
     renderChips(els.colors, product.colors);
+    // Fabric (optional).
+    if (els.fabric && els.fabricRow) {
+      const fabric = (product.fabric || "").trim();
+      if (fabric) {
+        els.fabric.textContent = fabric;
+        els.fabricRow.classList.remove("hidden");
+      } else {
+        els.fabricRow.classList.add("hidden");
+      }
+    }
+    // Deposit + replacement value are money, so reuse formatPHP.
+    if (els.deposit && els.depositRow) {
+      if (typeof product.deposit_required === "number") {
+        els.deposit.textContent = U.formatPHP(product.deposit_required);
+        els.depositRow.classList.remove("hidden");
+      } else {
+        els.depositRow.classList.add("hidden");
+      }
+    }
+    if (els.replacement && els.replacementRow) {
+      if (typeof product.replacement_value === "number") {
+        els.replacement.textContent = U.formatPHP(product.replacement_value);
+        els.replacementRow.classList.remove("hidden");
+      } else {
+        els.replacementRow.classList.add("hidden");
+      }
+    }
     if (els.duration) {
       els.duration.textContent =
         typeof product.rental_duration_days === "number"

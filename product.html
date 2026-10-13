@@ -73,6 +73,7 @@
       <!-- Info -->
       <div class="detail-info">
         <p class="detail-info__category" id="detail-category"></p>
+        <p class="detail-info__subcategory hidden" id="detail-subcategory"></p>
         <h1 class="detail-info__name" id="detail-name"></h1>
         <p class="detail-info__sku">Product code: <span id="detail-sku"></span></p>
 
@@ -89,9 +90,21 @@
             <span class="spec-row__label">Available colours</span>
             <div class="chips" id="detail-colors"></div>
           </div>
+          <div class="spec-row hidden" id="detail-fabric-row">
+            <span class="spec-row__label">Fabric</span>
+            <span id="detail-fabric"></span>
+          </div>
           <div class="spec-row">
             <span class="spec-row__label">Rental duration</span>
             <span id="detail-duration"></span>
+          </div>
+          <div class="spec-row hidden" id="detail-deposit-row">
+            <span class="spec-row__label">Deposit required</span>
+            <span id="detail-deposit"></span>
+          </div>
+          <div class="spec-row hidden" id="detail-replacement-row">
+            <span class="spec-row__label">Replacement value</span>
+            <span id="detail-replacement"></span>
           </div>
           <div class="spec-row">
             <span class="spec-row__label">Availability</span>

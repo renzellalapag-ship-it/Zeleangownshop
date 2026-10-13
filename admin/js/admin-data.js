@@ -64,13 +64,17 @@ window.AdminData = (function () {
       slug: row.slug,
       name: row.name,
       category: row.category,
+      sub_category: row.sub_category || "",
       description: row.description || "",
       listing_type: row.listing_type,
       rental_price: row.rental_price,
       sale_price: row.sale_price,
+      deposit_required: row.deposit_required,
+      replacement_value: row.replacement_value,
       rental_duration_days: row.rental_duration_days,
       sizes: row.sizes || [],
       colors: row.colors || [],
+      fabric: row.fabric || "",
       availability_status: row.availability_status,
       is_published: row.is_published,
       created_at: row.created_at,
@@ -120,13 +124,17 @@ window.AdminData = (function () {
       name: data.name,
       slug: data.slug || window.AdminUtils.slugify(data.name),
       category: data.category,
+      sub_category: data.sub_category || null,
       description: data.description || "",
       listing_type: data.listing_type,
       rental_price: data.rental_price,
       sale_price: data.sale_price,
+      deposit_required: data.deposit_required,
+      replacement_value: data.replacement_value,
       rental_duration_days: data.rental_duration_days,
       sizes: data.sizes || [],
       colors: data.colors || [],
+      fabric: data.fabric || null,
       availability_status: data.availability_status || "available",
       is_published: Boolean(data.is_published),
     };
@@ -178,9 +186,10 @@ window.AdminData = (function () {
     // A partial update (e.g. publish toggle) may only include some fields.
     const patch = {};
     const rowKeys = [
-      "sku", "name", "slug", "category", "description", "listing_type",
-      "rental_price", "sale_price", "rental_duration_days", "sizes",
-      "colors", "availability_status", "is_published",
+      "sku", "name", "slug", "category", "sub_category", "description", "listing_type",
+      "rental_price", "sale_price", "deposit_required", "replacement_value",
+      "rental_duration_days", "sizes", "colors", "fabric",
+      "availability_status", "is_published",
     ];
     rowKeys.forEach((k) => {
       if (Object.prototype.hasOwnProperty.call(data, k)) patch[k] = data[k];

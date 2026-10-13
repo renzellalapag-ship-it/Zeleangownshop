@@ -18,6 +18,40 @@
 
 window.ZELEAN_SAMPLE_PRODUCTS = [
   /* -----------------------------------------------------------------------
+   * Vietnam Dress — demonstration of the additional product attributes
+   * (sub-category, fabric, deposit required, replacement value).
+   * Values below are SAMPLE/demonstration data.
+   * --------------------------------------------------------------------- */
+  {
+    id: "sample-vietnam-mid-dress",
+    sku: "ZL-VND-0601",
+    slug: "vietnam-mid-dress",
+    name: "Vietnam Dress",
+    category: "Vietnam Dress",
+    sub_category: "Mid Dress",
+    description:
+      "SAMPLE DESCRIPTION: A lace mid dress in a floral pink and violet palette. " +
+      "Demonstrates the additional product attributes (sub-category, fabric, " +
+      "deposit required, and replacement value). Placeholder text.",
+    listing_type: "rent",            // "rent" | "sale" | "both"
+    rental_price: 500,               // DEMONSTRATION price only
+    sale_price: null,
+    deposit_required: 500,           // refundable rental deposit (₱)
+    replacement_value: 3000,         // item replacement value (₱)
+    rental_duration_days: 3,         // UNVERIFIED sample rental duration
+    sizes: ["M"],
+    colors: ["Floral Pink", "Violet"],
+    fabric: "Lace",
+    availability_status: "available", // "available" | "unavailable" | "maintenance"
+    is_published: true,
+    created_at: "2024-03-01T00:00:00Z",
+    updated_at: "2024-03-01T00:00:00Z",
+    images: [
+      { url: "assets/images/samples/gown-rose.svg", alt: "Vietnam Dress — front view (sample photo)" },
+      { url: "assets/images/samples/gown-mauve.svg", alt: "Vietnam Dress — alternate view (sample photo)" },
+    ],
+  },
+  /* -----------------------------------------------------------------------
    * GOWNS — the four named examples from the catalogue screenshot.
    * Price shown as ₱500 (demonstration). 3-day rental marked unverified.
    * --------------------------------------------------------------------- */

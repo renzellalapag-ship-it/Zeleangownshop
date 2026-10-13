@@ -20,16 +20,24 @@ The template is at `supabase/import-template.csv`. Columns map to the
 | `name`                | `name`                | Product name. |
 | `slug`                | `slug`                | URL-friendly, unique, lowercase-hyphenated. |
 | `category`            | `category`            | e.g. Ballgowns, Men's Suits, Barong. |
+| `sub_category`        | `sub_category`        | Optional finer grouping, e.g. Mid Dress. |
 | `listing_type`        | `listing_type`        | One of `rent`, `sale`, `both`. |
 | `rental_price`        | `rental_price`        | Number only (no ₱ or commas). Blank if N/A. |
 | `sale_price`          | `sale_price`          | Number only. Blank if N/A. |
+| `deposit_required`    | `deposit_required`    | Number only. Refundable rental deposit (₱). Blank if N/A. |
+| `replacement_value`   | `replacement_value`   | Number only. Item replacement value (₱). Blank if N/A. |
 | `rental_duration_days`| `rental_duration_days`| Whole number of days. Blank if N/A. |
 | `sizes`               | `sizes`               | Pipe-separated: `S\|M\|L`. |
 | `colors`              | `colors`              | Pipe-separated: `Blush\|Ivory`. |
+| `fabric`              | `fabric`              | Optional fabric, e.g. Lace. |
 | `availability_status` | `availability_status` | `available`, `unavailable`, or `maintenance`. |
 | `is_published`        | `is_published`        | `true` or `false`. |
 | `image_1..image_3`    | `product_images.url`  | File names matched by SKU (see step 6). |
 | `description`         | `description`         | Full text. |
+
+> The four optional columns (`sub_category`, `fabric`, `deposit_required`,
+> `replacement_value`) were added in `supabase/migrations/0006_products_attributes.sql`.
+> Run that migration **before** importing a CSV that includes these columns.
 
 ---
 

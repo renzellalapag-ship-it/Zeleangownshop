@@ -120,6 +120,15 @@ window.AdminProductForm = (function () {
 
     const rentalPrice = parseNum(val("rental_price"));
     const salePrice = parseNum(val("sale_price"));
+    const depositRequired = parseNum(val("deposit_required"));
+    const replacementValue = parseNum(val("replacement_value"));
+
+    if (depositRequired !== null && isNaN(depositRequired)) {
+      errors.deposit_required = "Enter a valid number.";
+    }
+    if (replacementValue !== null && isNaN(replacementValue)) {
+      errors.replacement_value = "Enter a valid number.";
+    }
 
     if ((listingType === "rent" || listingType === "both") && (rentalPrice === null || isNaN(rentalPrice))) {
       errors.rental_price = "Rental price is required for rent listings.";
@@ -148,10 +157,14 @@ window.AdminProductForm = (function () {
       name: name,
       slug: U.slugify(name),
       category: category,
+      sub_category: val("sub_category"),
+      fabric: val("fabric"),
       description: description,
       listing_type: listingType,
       rental_price: rentalPrice,
       sale_price: salePrice,
+      deposit_required: depositRequired,
+      replacement_value: replacementValue,
       rental_duration_days: duration ? Number(duration) : null,
       sizes: splitList(val("sizes")),
       colors: splitList(val("colors")),
@@ -429,6 +442,8 @@ window.AdminProductForm = (function () {
     const nameInput = addField({ name: "name", label: "Product name", required: true, placeholder: "e.g. Adelie" });
     const skuInput = addField({ name: "sku", label: "SKU", required: true, placeholder: "e.g. ZL-GWN-0001" });
     const categoryInput = addField({ name: "category", label: "Category", required: true, placeholder: "e.g. Ballgowns" });
+    const subCategoryInput = addField({ name: "sub_category", label: "Sub-category", placeholder: "e.g. Mid Dress" });
+    const fabricInput = addField({ name: "fabric", label: "Fabric", placeholder: "e.g. Lace" });
     const listingInput = addSelect({ name: "listing_type", label: "Listing type" }, [
       { value: "rent", label: "Rent" },
       { value: "sale", label: "Sale" },
@@ -436,6 +451,8 @@ window.AdminProductForm = (function () {
     ]);
     const rentalInput = addField({ name: "rental_price", label: "Rental price (₱)", type: "number", placeholder: "500" });
     const saleInput = addField({ name: "sale_price", label: "Sale price (₱)", type: "number", placeholder: "2500" });
+    const depositInput = addField({ name: "deposit_required", label: "Deposit required (₱)", type: "number", placeholder: "500" });
+    const replacementInput = addField({ name: "replacement_value", label: "Replacement value (₱)", type: "number", placeholder: "3000" });
     const durationInput = addField({ name: "rental_duration_days", label: "Rental duration (days)", type: "number", placeholder: "3" });
     const sizesInput = addField({ name: "sizes", label: "Sizes", hint: "Separate with commas or pipes, e.g. S, M, L", placeholder: "S, M, L" });
     const colorsInput = addField({ name: "colors", label: "Colours", hint: "Separate with commas or pipes", placeholder: "Blush, Ivory" });
@@ -516,9 +533,13 @@ window.AdminProductForm = (function () {
       nameInput.value = product.name || "";
       skuInput.value = product.sku || "";
       categoryInput.value = product.category || "";
+      subCategoryInput.value = product.sub_category || "";
+      fabricInput.value = product.fabric || "";
       listingInput.value = product.listing_type || "rent";
       rentalInput.value = product.rental_price != null ? product.rental_price : "";
       saleInput.value = product.sale_price != null ? product.sale_price : "";
+      depositInput.value = product.deposit_required != null ? product.deposit_required : "";
+      replacementInput.value = product.replacement_value != null ? product.replacement_value : "";
       durationInput.value = product.rental_duration_days != null ? product.rental_duration_days : "";
       sizesInput.value = (product.sizes || []).join(", ");
       colorsInput.value = (product.colors || []).join(", ");

@@ -747,6 +747,13 @@ h1, h2, h3, h4 {
   color: var(--color-gold);
   margin-bottom: var(--space-2xs);
 }
+.detail-info__subcategory {
+  font-size: var(--fs-sm);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: var(--space-2xs);
+}
 .detail-info__name {
   font-size: var(--fs-3xl);
   font-weight: 500;
