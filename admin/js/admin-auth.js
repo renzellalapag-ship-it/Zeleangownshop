@@ -65,18 +65,42 @@ window.AdminAuth = (function () {
     }
   }
 
-  /** Does this user have a row in admin_roles? */
+  /** Does this user have a row in admin_roles? Log safe diagnostics if lookup fails. */
   async function isAdmin(userId) {
     const sb = client();
-    if (!sb || !userId) return false;
+
+    if (!sb || !userId) {
+      console.error("[AdminAuth] Supabase client or user ID is missing.");
+      return false;
+    }
+
     try {
       const { data, error } = await sb
         .from("admin_roles")
         .select("user_id")
         .eq("user_id", userId)
         .maybeSingle();
-      return !error && data ? true : false;
+
+      if (error) {
+        // Safe to log database error metadata; never log passwords or tokens.
+        console.error("[AdminAuth] admin_roles lookup failed:", {
+          code: error.code,
+          message: error.message,
+          details: error.details,
+          hint: error.hint,
+        });
+        return false;
+      }
+
+      if (!data) {
+        console.warn("[AdminAuth] No admin_roles row visible for authenticated user:", userId);
+        return false;
+      }
+
+      console.info("[AdminAuth] Admin role verified.");
+      return true;
     } catch (e) {
+      console.error("[AdminAuth] Unexpected role lookup error:", e && e.message ? e.message : e);
       return false;
     }
   }
