@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Sign In — Zelean Admin (Demo)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@300;400;500&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body class="admin-body">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="demo-banner" style="border-radius:10px; margin-bottom:1rem;">
+        <strong>Admin access.</strong> Sign in with your authorized Zelean admin account.
+      </div>
+      <h1>Zelean Admin</h1>
+      <p class="auth-sub">Sign in to manage the catalogue.</p>
+
+      <form id="login-form" novalidate>
+        <div class="field" style="margin-bottom:1rem;">
+          <label for="email">Email</label>
+          <input class="input" id="email" type="email" autocomplete="username" placeholder="you@example.com" required />
+          <span class="field-error hidden" data-error-for="email"></span>
+        </div>
+        <div class="field" style="margin-bottom:1.2rem;">
+          <label for="password">Password</label>
+          <input class="input" id="password" type="password" autocomplete="current-password" placeholder="••••••••" required />
+          <span class="field-error hidden" data-error-for="password"></span>
+        </div>
+        <div class="field-error hidden" id="login-error" role="alert" style="margin-bottom:1rem;"></div>
+        <button class="btn btn-primary btn-block" type="submit">Sign In</button>
+      </form>
+
+      <p class="field-hint" style="margin-top:1rem; text-align:center;">
+        Access is restricted to the account listed in Supabase <code>admin_roles</code>.
+        If you see an authorization error, ask the owner to add your user id.
+      </p>
+      <p style="text-align:center; margin-top:0.75rem;">
+        <a href="../index.html">← Back to the store</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/admin-auth.js"></script>
+</body>
+</html>

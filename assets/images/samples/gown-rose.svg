@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800" role="img" aria-label="Sample gown photo placeholder in blush tones">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F7EEE9"/>
+      <stop offset="100%" stop-color="#EBD6CE"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="800" fill="url(#bg)"/>
+  <rect x="24" y="24" width="552" height="752" fill="none" stroke="#C9A46A" stroke-width="2" opacity="0.45"/>
+  <g opacity="0.9">
+    <path d="M300 306 L266 352 L260 432 L204 640 L396 640 L340 432 L334 352 Z" fill="#DBBFB2"/>
+    <path d="M266 352 L281 320 M334 352 L319 320" stroke="#DBBFB2" stroke-width="7" fill="none" stroke-linecap="round"/>
+    <path d="M266 352 Q300 378 334 352" fill="none" stroke="#C9A46A" stroke-width="2" opacity="0.55"/>
+  </g>
+  <text x="300" y="716" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="26" fill="#8D573D" opacity="0.8">Zelean &#183; Sample Photo</text>
+</svg>

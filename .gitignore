@@ -1,0 +1,33 @@
+# ---------------------------------------------------------------------------
+# Zelean Gowns — Git Ignore
+# ---------------------------------------------------------------------------
+
+# Environment / secrets
+# Keep a committed template (config.js has placeholders) but never commit real
+# credentials if you add a separate .env or local overrides.
+.env
+.env.local
+.env.*.local
+*.local.js
+
+# Editor / OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Dependencies (none by design, but just in case)
+node_modules/
+
+# Supabase local (only if you install the Supabase CLI later)
+supabase/.branches/
+supabase/.temp/
+
+# Logs
+*.log
+
+# Local build / cache
+.cache/
+dist/

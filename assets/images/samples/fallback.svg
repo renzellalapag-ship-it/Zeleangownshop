@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800" role="img" aria-label="Image not available placeholder">
+  <rect width="600" height="800" fill="#EEE3DD"/>
+  <rect x="24" y="24" width="552" height="752" fill="none" stroke="#C9A46A" stroke-width="2" opacity="0.4"/>
+  <g opacity="0.7">
+    <path d="M258 330 h84 v112 h-84 z M270 330 l30 -26 l30 26" fill="none" stroke="#8D573D" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="300" cy="386" r="9" fill="#8D573D" opacity="0.6"/>
+  </g>
+  <text x="300" y="500" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="26" fill="#7D716B">Image not available</text>
+</svg>

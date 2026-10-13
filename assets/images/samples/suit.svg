@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800" role="img" aria-label="Sample men's suit photo placeholder">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F2EEE9"/>
+      <stop offset="100%" stop-color="#D9D2C9"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="800" fill="url(#bg)"/>
+  <rect x="24" y="24" width="552" height="752" fill="none" stroke="#C9A46A" stroke-width="2" opacity="0.45"/>
+  <g opacity="0.9">
+    <path d="M300 300 L248 320 L232 360 L214 640 L386 640 L368 360 L352 320 Z" fill="#5B5049"/>
+    <path d="M300 300 L282 322 L300 470 L318 322 Z" fill="#EFE9E1"/>
+    <path d="M248 320 L282 322 M352 320 L318 322" stroke="#5B5049" stroke-width="7" fill="none" stroke-linecap="round"/>
+  </g>
+  <text x="300" y="716" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="26" fill="#8D573D" opacity="0.8">Zelean &#183; Sample Photo</text>
+</svg>

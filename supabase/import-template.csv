@@ -1,0 +1,4 @@
+sku,name,slug,category,listing_type,rental_price,sale_price,rental_duration_days,sizes,colors,availability_status,is_published,image_1,image_2,image_3,description
+ZL-GWN-0001,Adelie,adelie,Ballgowns,rent,500,,3,XS|S|M|L,Blush|Ivory,available,true,adelie-01.jpg,adelie-02.jpg,,SAMPLE: A graceful floor-length ballgown.
+ZL-GWN-0002,Arielle,arielle,Long Gowns,rent,500,,3,S|M|L,Champagne,available,true,arielle-01.jpg,arielle-02.jpg,,SAMPLE: An elegant long gown.
+ZL-SUT-0201,Noir Men's Suit,noir-mens-suit,Men's Suits,rent,1500,,3,S|M|L|XL,Black|Navy,available,true,noir-01.jpg,,,SAMPLE: A classic tailored men's suit.

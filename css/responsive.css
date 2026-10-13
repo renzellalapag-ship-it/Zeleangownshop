@@ -1,0 +1,220 @@
+/* ==========================================================================
+   Zelean Gowns — Responsive Styles
+   --------------------------------------------------------------------------
+   Mobile-first adjustments layered on top of styles.css. Breakpoints:
+     - max-width 1024px : tablet / small laptop
+     - max-width 860px  : large phone landscape / small tablet (nav collapse)
+     - max-width 640px  : phone
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Tablet (≤ 1024px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  :root {
+    --fs-3xl: 2.4rem;
+    --space-3xl: 4.5rem;
+  }
+
+  .hero__inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+    text-align: center;
+    padding-block: var(--space-2xl);
+  }
+  .hero__text {
+    margin-inline: auto;
+  }
+  .hero__actions {
+    justify-content: center;
+  }
+  .hero__media {
+    max-width: 420px;
+    margin-inline: auto;
+    order: -1;
+  }
+  .hero__badge {
+    bottom: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+
+  .product-detail {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+  .detail-info__name {
+    font-size: var(--fs-2xl);
+  }
+
+  .about__inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+  .about__media {
+    max-width: 460px;
+    margin-inline: auto;
+  }
+
+  .toolbar-row {
+    grid-template-columns: 1fr 1fr;
+  }
+  .toolbar-row .field--search {
+    grid-column: 1 / -1;
+  }
+
+  .footer__inner {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Small tablet / nav collapse (≤ 860px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 860px) {
+  .nav-toggle {
+    display: flex;
+  }
+
+  .nav {
+    position: fixed;
+    inset: var(--header-height) 0 auto 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: var(--shadow-lg);
+    padding: var(--space-sm) var(--space-md) var(--space-md);
+    transform: translateY(-130%);
+    transition: transform var(--transition);
+    max-height: calc(100vh - var(--header-height));
+    overflow-y: auto;
+  }
+  .nav.is-open {
+    transform: translateY(0);
+  }
+  .nav__link {
+    padding: var(--space-2xs) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .nav__link::after {
+    display: none;
+  }
+  .nav__cta {
+    margin: var(--space-2xs) 0 0;
+    width: 100%;
+  }
+
+  .footer__inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Phone (≤ 640px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  :root {
+    --space-2xl: 3rem;
+    --space-3xl: 3.5rem;
+    --header-height: 66px;
+  }
+
+  .container {
+    padding-inline: var(--space-sm);
+  }
+
+  .section {
+    padding-block: var(--space-xl);
+  }
+
+  .brand__logo {
+    width: 36px;
+    height: 36px;
+    font-size: var(--fs-base);
+  }
+  .brand__script {
+    font-size: 1.45rem;
+  }
+  .brand__sub {
+    font-size: 0.55rem;
+  }
+
+  .hero__title {
+    font-size: clamp(2.1rem, 9vw, 2.9rem);
+  }
+
+  .toolbar-row {
+    grid-template-columns: 1fr;
+  }
+  .toolbar-meta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .toolbar-meta .btn {
+    width: 100%;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--space-sm);
+  }
+  .product-card__name {
+    font-size: var(--fs-md);
+  }
+
+  .spec-row {
+    grid-template-columns: 1fr;
+    gap: var(--space-3xs);
+  }
+  .spec-row__label {
+    margin-top: var(--space-2xs);
+  }
+
+  .detail-gallery__thumb {
+    width: 60px;
+    height: 76px;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Very small phones (≤ 380px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 380px) {
+  .product-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xs);
+  }
+  .product-card__body {
+    padding: var(--space-2xs);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Reduced motion — respect user preference
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .product-card:hover,
+  .category-card:hover {
+    transform: none;
+  }
+  .product-card:hover .product-card__img,
+  .category-card:hover .category-card__media img {
+    transform: none;
+  }
+}

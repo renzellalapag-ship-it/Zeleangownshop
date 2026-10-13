@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product — Zelean Gowns, Dresses, Suits and Barong</title>
+  <meta name="description" content="Product details from the Zelean Gowns catalogue." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Jost:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link
+    rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%238D573D'/%3E%3Ctext x='16' y='23' font-family='Georgia' font-size='20' fill='%23EEE3DD' text-anchor='middle'%3EZ%3C/text%3E%3C/svg%3E"
+  />
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <main id="main">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html">Home</a> &nbsp;/&nbsp;
+        <a href="index.html#catalogue">Catalogue</a> &nbsp;/&nbsp;
+        <span id="breadcrumb-current">Product</span>
+      </nav>
+    </div>
+
+    <!-- Loading state -->
+    <div class="container">
+      <div class="state-panel hidden" id="state-loading">
+        <div class="spinner" aria-hidden="true"></div>
+        <h3>Loading product…</h3>
+        <p>Please wait a moment.</p>
+      </div>
+
+      <!-- Error state -->
+      <div class="state-panel hidden" id="state-error" role="alert">
+        <h3>Something went wrong</h3>
+        <p data-error-message>Please try again later.</p>
+        <a class="btn btn-outline btn-sm" href="index.html#catalogue" style="margin-top: var(--space-sm);">
+          Back to catalogue
+        </a>
+      </div>
+
+      <!-- Not found state -->
+      <div class="state-panel hidden" id="state-not-found">
+        <h3>Product not found</h3>
+        <p>
+          This piece may have been removed or the link is incorrect. Browse the
+          catalogue to see what's available.
+        </p>
+        <a class="btn btn-outline btn-sm" href="index.html#catalogue" style="margin-top: var(--space-sm);">
+          Back to catalogue
+        </a>
+      </div>
+    </div>
+
+    <!-- Product detail (populated by js/product-details.js) -->
+    <div class="container product-detail hidden" id="product-content">
+      <!-- Gallery -->
+      <div class="detail-gallery">
+        <div class="detail-gallery__main" id="gallery-main-image"></div>
+        <div class="detail-gallery__thumbs" id="gallery-thumbs"></div>
+      </div>
+
+      <!-- Info -->
+      <div class="detail-info">
+        <p class="detail-info__category" id="detail-category"></p>
+        <h1 class="detail-info__name" id="detail-name"></h1>
+        <p class="detail-info__sku">Product code: <span id="detail-sku"></span></p>
+
+        <div class="detail-price" id="detail-prices"></div>
+
+        <p class="detail-description" id="detail-description"></p>
+
+        <div class="detail-specs">
+          <div class="spec-row">
+            <span class="spec-row__label">Available sizes</span>
+            <div class="chips" id="detail-sizes"></div>
+          </div>
+          <div class="spec-row">
+            <span class="spec-row__label">Available colours</span>
+            <div class="chips" id="detail-colors"></div>
+          </div>
+          <div class="spec-row">
+            <span class="spec-row__label">Rental duration</span>
+            <span id="detail-duration"></span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-row__label">Availability</span>
+            <span class="availability-badge availability-badge--available" id="detail-availability"></span>
+          </div>
+        </div>
+
+        <div class="detail-actions" id="detail-inquiry"></div>
+
+        <p class="detail-note" style="font-size: var(--fs-sm); color: var(--color-muted); margin-top: var(--space-md);">
+          A Messenger inquiry is not a confirmed reservation. Please coordinate
+          with Zelean to reserve your preferred date.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/sample-data.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/filters.js"></script>
+  <!-- Supabase client library (provides window.supabase). Safe to load even while
+       Supabase is disabled — js/supabase-client.js falls back to sample data. -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/messenger.js"></script>
+  <script src="js/site-chrome.js"></script>
+  <script src="js/product-details.js"></script>
+  <script>
+    ZeleanChrome.init();
+    ZeleanProductDetails.init();
+  </script>
+</body>
+</html>

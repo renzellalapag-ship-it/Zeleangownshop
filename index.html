@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zelean Gowns, Dresses, Suits and Barong — Malolos, Bulacan</title>
+  <meta
+    name="description"
+    content="Zelean Gowns, Dresses, Suits and Barong — elegant formalwear for rent and sale in Malolos, Bulacan. Ballgowns, cocktail dresses, gowns, suits, barong, Filipiniana, and accessories."
+  />
+
+  <!-- Fonts: elegant serif (headings), script (brand), clean sans (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Jost:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link
+    rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%238D573D'/%3E%3Ctext x='16' y='23' font-family='Georgia' font-size='20' fill='%23EEE3DD' text-anchor='middle'%3EZ%3C/text%3E%3C/svg%3E"
+  />
+</head>
+<body>
+  <!-- Shared header (rendered by js/site-chrome.js) -->
+  <div id="site-header"></div>
+
+  <main id="main">
+    <!-- ============================ HERO ============================ -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero__inner">
+        <div class="hero__content">
+          <p class="hero__eyebrow">Malolos, Bulacan</p>
+          <h1 class="hero__title" id="hero-title">
+            Find the <em>Perfect</em> Look for Your Special Occasion
+          </h1>
+          <p class="hero__text">
+            Zelean offers elegant gowns, dresses, suits, barong, and Filipiniana
+            for rent or sale — so you can look and feel your best for weddings,
+            debuts, pageants, and every celebration in between.
+          </p>
+          <div class="hero__actions">
+            <a class="btn btn-primary btn-lg" href="#catalogue">Browse the Catalogue</a>
+            <a class="btn btn-outline btn-lg" href="about.html">About Zelean</a>
+          </div>
+        </div>
+        <div class="hero__media">
+          <div class="hero__frame">
+            <img
+              src="assets/images/samples/gown-champagne.svg"
+              alt="Elegant champagne gown featured by Zelean (sample photo)"
+            />
+          </div>
+          <span class="hero__badge">Rent or Buy</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== CATEGORIES ========================= -->
+    <section class="section" id="categories" aria-labelledby="categories-title">
+      <div class="container">
+        <span class="section-eyebrow">Our Collection</span>
+        <h2 class="section-title" id="categories-title">Shop by Category</h2>
+        <p class="section-intro">
+          From show-stopping ballgowns to tailored suits and the classic barong —
+          explore formalwear for every occasion.
+        </p>
+        <div class="divider-ornament" aria-hidden="true" style="margin: var(--space-md) 0;">◆</div>
+
+        <!-- Category cards are wired up by js/catalogue.js via categories data.
+             Links apply the category filter in the catalogue below. -->
+        <div class="category-grid" id="category-grid">
+          <a class="category-card" href="#catalogue" data-category="Ballgowns">
+            <div class="category-card__media">
+              <img src="assets/images/samples/gown-rose.svg" alt="Ballgowns category (sample photo)" loading="lazy" />
+            </div>
+            <div class="category-card__body"><h3 class="category-card__name">Ballgowns</h3></div>
+          </a>
+          <a class="category-card" href="#catalogue" data-category="Mermaid Gowns">
+            <div class="category-card__media">
+              <img src="assets/images/samples/gown-mauve.svg" alt="Mermaid gowns category (sample photo)" loading="lazy" />
+            </div>
+            <div class="category-card__body"><h3 class="category-card__name">Mermaid Gowns</h3></div>
+          </a>
+          <a class="category-card" href="#catalogue" data-category="Cocktail Dresses">
+            <div class="category-card__media">
+              <img src="assets/images/samples/gown-rose.svg" alt="Cocktail dresses category (sample photo)" loading="lazy" />
+            </div>
+            <div class="category-card__body"><h3 class="category-card__name">Cocktail Dresses</h3></div>
+          </a>
+          <a class="category-card" href="#catalogue" data-category="Men's Suits">
+            <div class="category-card__media">
+              <img src="assets/images/samples/suit.svg" alt="Men's suits category (sample photo)" loading="lazy" />
+            </div>
+            <div class="category-card__body"><h3 class="category-card__name">Men's Suits</h3></div>
+          </a>
+          <a class="category-card" href="#catalogue" data-category="Barong">
+            <div class="category-card__media">
+              <img src="assets/images/samples/barong.svg" alt="Barong category (sample photo)" loading="lazy" />
+            </div>
+            <div class="category-card__body"><h3 class="category-card__name">Barong</h3></div>
+          </a>
+          <a class="category-card" href="#catalogue" data-category="Bags & Accessories">
+            <div class="category-card__media">
+              <img src="assets/images/samples/accessories.svg" alt="Bags and accessories category (sample photo)" loading="lazy" />
+            </div>
+            <div class="category-card__body"><h3 class="category-card__name">Accessories</h3></div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== CATALOGUE ========================== -->
+    <section class="section" id="catalogue" aria-labelledby="catalogue-title" style="padding-top: 0;">
+      <div class="container">
+        <span class="section-eyebrow">The Catalogue</span>
+        <h2 class="section-title" id="catalogue-title">Browse Our Collection</h2>
+        <p class="section-intro">
+          Search and filter to find the perfect piece for your occasion.
+        </p>
+
+        <!-- Filter toolbar -->
+        <div class="catalogue-toolbar" role="search" style="margin-top: var(--space-lg);">
+          <div class="toolbar-row">
+            <div class="field field--search">
+              <label class="field__label" for="search-input">Search</label>
+              <input
+                class="input"
+                id="search-input"
+                type="search"
+                placeholder="Search by name, category, colour…"
+                autocomplete="off"
+              />
+            </div>
+            <div class="field">
+              <label class="field__label" for="filter-category">Category</label>
+              <select class="select" id="filter-category">
+                <option value="">All categories</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field__label" for="filter-size">Size</label>
+              <select class="select" id="filter-size">
+                <option value="">All sizes</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field__label" for="filter-color">Colour</label>
+              <select class="select" id="filter-color">
+                <option value="">All colours</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field__label" for="filter-listing">Availability</label>
+              <select class="select" id="filter-listing">
+                <option value="">All options</option>
+                <option value="rent">For rent</option>
+                <option value="sale">For sale</option>
+                <option value="both">Rent or buy</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field__label" for="sort-select">Sort by</label>
+              <select class="select" id="sort-select">
+                <option value="featured">Featured</option>
+                <option value="newest">Newest</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="name-asc">Name: A–Z</option>
+                <option value="name-desc">Name: Z–A</option>
+              </select>
+            </div>
+          </div>
+          <div class="toolbar-meta">
+            <span class="results-count" id="results-count" aria-live="polite"></span>
+            <button class="btn btn-ghost btn-sm" id="clear-filters" type="button">
+              Clear filters
+            </button>
+          </div>
+        </div>
+
+        <!-- Product grid -->
+        <div class="product-grid" id="product-grid"></div>
+
+        <!-- Loading / error / empty states -->
+        <div id="catalogue-state">
+          <div class="state-panel hidden" id="state-loading">
+            <div class="spinner" aria-hidden="true"></div>
+            <h3>Loading the catalogue…</h3>
+            <p>Please wait a moment.</p>
+          </div>
+          <div class="state-panel hidden" id="state-error" role="alert">
+            <h3>Something went wrong</h3>
+            <p data-error-message>Please try again later.</p>
+          </div>
+          <div class="state-panel hidden" id="state-empty">
+            <h3>No matching pieces</h3>
+            <p>
+              We couldn't find anything that matches your search. Try clearing
+              some filters.
+            </p>
+            <button class="btn btn-outline btn-sm" id="empty-clear" type="button" style="margin-top: var(--space-sm);">
+              Clear filters
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Shared footer (rendered by js/site-chrome.js) -->
+  <div id="site-footer"></div>
+
+  <!-- Scripts: config → sample data → utilities → filters → data → chrome → page -->
+  <script src="js/config.js"></script>
+  <script src="js/sample-data.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/filters.js"></script>
+  <!-- Supabase client library (provides window.supabase). Safe to load even while
+       Supabase is disabled — js/supabase-client.js falls back to sample data. -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/messenger.js"></script>
+  <script src="js/site-chrome.js"></script>
+  <script src="js/catalogue.js"></script>
+  <script>
+    // Wire the "clear filters" button inside the empty state too.
+    document.getElementById("empty-clear").addEventListener("click", function () {
+      var btn = document.getElementById("clear-filters");
+      if (btn) btn.click();
+    });
+    // Category showcase cards apply the category filter and scroll to catalogue.
+    document.querySelectorAll("#category-grid .category-card").forEach(function (card) {
+      card.addEventListener("click", function () {
+        var cat = card.getAttribute("data-category");
+        var select = document.getElementById("filter-category");
+        if (select && cat) {
+          // If the option exists, select it; otherwise load will populate later.
+          setTimeout(function () {
+            var found = false;
+            for (var i = 0; i < select.options.length; i++) {
+              if (select.options[i].value === cat) { select.selectedIndex = i; found = true; break; }
+            }
+            if (found) select.dispatchEvent(new Event("change"));
+          }, 300);
+        }
+      });
+    });
+    ZeleanChrome.init();
+    ZeleanCatalogue.init();
+  </script>
+</body>
+</html>
+
