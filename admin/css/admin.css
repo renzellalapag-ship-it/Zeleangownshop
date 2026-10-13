@@ -39,6 +39,11 @@ a:hover { color: #71432b; }
 
 .hidden { display: none !important; }
 
+/* The dimmed backdrop is a mobile-only overlay. Keep it out of the desktop
+   grid so it does not consume the second column and push <main> onto a new
+   (narrow) row. It is re-shown as a fixed overlay in the mobile media query. */
+.admin-backdrop { display: none; }
+
 /* --------------------------------------------------------------------------
    Demo banner
    -------------------------------------------------------------------------- */

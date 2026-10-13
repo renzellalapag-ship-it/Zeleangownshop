@@ -1,21 +1,21 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex" />
-  <title>Dashboard — Zelean Admin</title>
+  <title>Dashboard â€” Zelean Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@300;400;500&display=swap"
     rel="stylesheet"
   />
-  <link rel="stylesheet" href="css/admin.css?v=6" />
+  <link rel="stylesheet" href="css/admin.css?v=7" />
 </head>
 <body class="admin-body">
   <div class="demo-banner">
-    <strong>Admin dashboard.</strong> Signed in with Supabase Auth — product data loads live from your Supabase database.
+    <strong>Admin dashboard.</strong> Signed in with Supabase Auth â€” product data loads live from your Supabase database.
   </div>
 
   <div class="admin-layout">
@@ -32,7 +32,7 @@
       <nav class="sidebar__nav" aria-label="Admin">
         <a class="sidebar__link is-active" href="index.html">Dashboard</a>
         <a class="sidebar__link" href="index.html#products">Products</a>
-        <a class="sidebar__link" href="../index.html" target="_blank" rel="noopener">View Store ↗</a>
+        <a class="sidebar__link" href="../index.html" target="_blank" rel="noopener">View Store â†—</a>
       </nav>
 
       <div class="sidebar__footer">
@@ -49,10 +49,10 @@
     <main class="admin-main">
       <div class="admin-topbar">
         <div style="display:flex; align-items:center; gap:0.75rem;">
-          <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Toggle menu">☰</button>
+          <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Toggle menu">â˜°</button>
           <div>
             <h2>Dashboard</h2>
-            <p id="welcome-line">Welcome back — manage your catalogue.</p>
+            <p id="welcome-line">Welcome back â€” manage your catalogue.</p>
           </div>
         </div>
         <button class="btn btn-primary" id="add-product-btn" type="button">+ Add Product</button>
@@ -65,7 +65,7 @@
       <section class="panel" id="products">
         <div class="panel__toolbar">
           <div class="grow">
-            <input class="input" id="admin-search" type="search" placeholder="Search by name, SKU, category…" autocomplete="off" />
+            <input class="input" id="admin-search" type="search" placeholder="Search by name, SKU, categoryâ€¦" autocomplete="off" />
           </div>
           <select class="select" id="admin-category" style="max-width:200px;">
             <option value="">All categories</option>
@@ -99,16 +99,16 @@
   <!-- Toast host -->
   <div id="toast-root"></div>
 
-  <!-- Admin scripts: config → Supabase lib → helpers → auth → data → dashboard → form -->
+  <!-- Admin scripts: config â†’ Supabase lib â†’ helpers â†’ auth â†’ data â†’ dashboard â†’ form -->
   <!-- config.js + Supabase library must load before admin-auth.js so real auth works. -->
   <!-- sample-data.js provides the seed products for the demo store. -->
-  <script src="../js/config.js?v=6"></script>
+  <script src="../js/config.js?v=7"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="../js/sample-data.js?v=6"></script>
-  <script src="js/admin-utils.js?v=6"></script>
-  <script src="js/admin-auth.js?v=6"></script>
-  <script src="js/admin-data.js?v=6"></script>
-  <script src="js/product-form.js?v=6"></script>
-  <script src="js/admin.js?v=6"></script>
+  <script src="../js/sample-data.js?v=7"></script>
+  <script src="js/admin-utils.js?v=7"></script>
+  <script src="js/admin-auth.js?v=7"></script>
+  <script src="js/admin-data.js?v=7"></script>
+  <script src="js/product-form.js?v=7"></script>
+  <script src="js/admin.js?v=7"></script>
 </body>
 </html>
