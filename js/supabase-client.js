@@ -137,13 +137,23 @@ window.ZeleanData = (function () {
     }
 
     const s = window.ZELEAN_CONFIG.supabase;
-    const { data, error } = await client
+
+    // `id` is a UUID column. Comparing it against a non-UUID value (e.g. a
+    // slug like "adelie") makes Postgres throw "invalid input syntax for type
+    // uuid", which fails the whole query. So only include id.eq when the key
+    // is actually a UUID; otherwise match on slug / sku.
+    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(key);
+
+    let query = client
       .from(s.productsTable)
       .select("*, product_images(id, url, alt, position)")
-      .eq("is_published", true)
-      .or("id.eq." + key + ",slug.eq." + key + ",sku.eq." + key)
-      .limit(1)
-      .maybeSingle();
+      .eq("is_published", true);
+
+    query = isUuid
+      ? query.or("id.eq." + key + ",slug.eq." + key + ",sku.eq." + key)
+      : query.or("slug.eq." + key + ",sku.eq." + key);
+
+    const { data, error } = await query.limit(1).maybeSingle();
 
     if (error) {
       throw new Error(error.message);
