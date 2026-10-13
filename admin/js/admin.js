@@ -135,6 +135,35 @@ window.AdminDashboard = (function () {
     return parts.length ? parts.join(" · ") : "—";
   }
 
+  /** Show a loading placeholder row while products are fetched. */
+  function renderLoading() {
+    if (!els.rows) return;
+    els.rows.innerHTML = "";
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = 9;
+    td.className = "empty-row";
+    td.textContent = "Loading products…";
+    tr.appendChild(td);
+    els.rows.appendChild(tr);
+  }
+
+  /** Show a persistent error row if the initial product fetch fails. */
+  function renderLoadError(err) {
+    if (!els.rows) return;
+    els.rows.innerHTML = "";
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = 9;
+    td.className = "empty-row";
+    td.textContent =
+      "Could not load products: " +
+      (err && err.message ? err.message : "unknown error") +
+      ". Check your connection and refresh the page.";
+    tr.appendChild(td);
+    els.rows.appendChild(tr);
+  }
+
   function renderRows(products) {
     const list = products.filter(matches);
     els.rows.innerHTML = "";
@@ -144,7 +173,9 @@ window.AdminDashboard = (function () {
       const td = document.createElement("td");
       td.colSpan = 9;
       td.className = "empty-row";
-      td.textContent = "No products match your search.";
+      td.textContent = products.length
+        ? "No products match your search."
+        : "No products yet. Click “+ Add Product” to create your first one.";
       tr.appendChild(td);
       els.rows.appendChild(tr);
       return;
@@ -342,14 +373,27 @@ window.AdminDashboard = (function () {
       if (!allowed) return;
       cacheEls();
       bindEvents();
+
+      // Confirm to the user exactly who is signed in.
+      window.AdminAuth.currentUser().then(function (u) {
+        const line = document.getElementById("welcome-line");
+        if (line && u && u.email) {
+          line.textContent = "Signed in as " + u.email + " — manage your catalogue.";
+        }
+      });
+
+      renderLoading();
       window.AdminData.onChange(function (products) {
         populateCategoryFilter(products);
         renderAll(products);
       });
       // load() is async and re-renders via onChange; handle failures clearly.
       window.AdminData.load().catch(function (err) {
-        U.toast("Could not load products: " + (err && err.message ? err.message : "unknown error"), "error");
-        renderAll(window.AdminData.all());
+        renderLoadError(err);
+        U.toast(
+          "Could not load products: " + (err && err.message ? err.message : "unknown error"),
+          "error"
+        );
       });
     });
   }

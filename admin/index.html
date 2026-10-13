@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex" />
-  <title>Dashboard — Zelean Admin (Demo)</title>
+  <title>Dashboard — Zelean Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -15,9 +15,7 @@
 </head>
 <body class="admin-body">
   <div class="demo-banner">
-    <strong>Admin dashboard.</strong> Access is restricted to your authorized
-    admin account (Supabase Auth + <code>admin_roles</code>). Product data shown
-    is in-memory sample data for now.
+    <strong>Admin dashboard.</strong> Signed in with Supabase Auth — product data loads live from your Supabase database.
   </div>
 
   <div class="admin-layout">
@@ -27,7 +25,7 @@
         <span class="sidebar__logo" aria-hidden="true">Z</span>
         <span>
           <span class="sidebar__name">Zelean</span><br />
-          <span class="sidebar__tag">Admin · Demo</span>
+          <span class="sidebar__tag">Admin</span>
         </span>
       </div>
 
@@ -54,7 +52,7 @@
           <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Toggle menu">☰</button>
           <div>
             <h2>Dashboard</h2>
-            <p>Welcome back — manage your catalogue.</p>
+            <p id="welcome-line">Welcome back — manage your catalogue.</p>
           </div>
         </div>
         <button class="btn btn-primary" id="add-product-btn" type="button">+ Add Product</button>
