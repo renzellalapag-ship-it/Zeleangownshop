@@ -194,8 +194,14 @@ window.AdminDashboard = (function () {
       toggleBtn.className = "btn btn-outline btn-sm";
       toggleBtn.textContent = p.is_published ? "Unpublish" : "Publish";
       toggleBtn.addEventListener("click", function () {
-        window.AdminData.update(p.id, { is_published: !p.is_published });
-        U.toast(p.is_published ? "Product unpublished." : "Product published.", "success");
+        const nextState = !p.is_published;
+        window.AdminData.update(p.id, { is_published: nextState })
+          .then(function () {
+            U.toast(nextState ? "Product published." : "Product unpublished.", "success");
+          })
+          .catch(function (err) {
+            U.toast("Could not update status: " + (err && err.message ? err.message : "unknown error"), "error");
+          });
       });
       actions.appendChild(toggleBtn);
 
@@ -221,8 +227,11 @@ window.AdminDashboard = (function () {
 
   function addProduct() {
     window.AdminProductForm.open(null, function (data) {
-      window.AdminData.create(data);
-      U.toast("Product added.", "success");
+      window.AdminData.create(data)
+        .then(function () { U.toast("Product added.", "success"); })
+        .catch(function (err) {
+          U.toast("Could not add product: " + (err && err.message ? err.message : "unknown error"), "error");
+        });
     });
   }
 
@@ -230,8 +239,11 @@ window.AdminDashboard = (function () {
     const product = window.AdminData.get(id);
     if (!product) return;
     window.AdminProductForm.open(product, function (data) {
-      window.AdminData.update(id, data);
-      U.toast("Product updated.", "success");
+      window.AdminData.update(id, data)
+        .then(function () { U.toast("Product updated.", "success"); })
+        .catch(function (err) {
+          U.toast("Could not update product: " + (err && err.message ? err.message : "unknown error"), "error");
+        });
     });
   }
 
@@ -240,8 +252,11 @@ window.AdminDashboard = (function () {
       "Delete \"" + product.name + "\" (" + product.sku + ")? This cannot be undone."
     );
     if (!ok) return;
-    window.AdminData.remove(product.id);
-    U.toast("Product deleted.", "success");
+    window.AdminData.remove(product.id)
+      .then(function () { U.toast("Product deleted.", "success"); })
+      .catch(function (err) {
+        U.toast("Could not delete product: " + (err && err.message ? err.message : "unknown error"), "error");
+      });
   }
 
   function bindEvents() {
@@ -286,14 +301,16 @@ window.AdminDashboard = (function () {
     window.AdminAuth.requireAuth().then(function (allowed) {
       if (!allowed) return;
       cacheEls();
-      window.AdminData.load();
-      populateCategoryFilter(window.AdminData.all());
       bindEvents();
       window.AdminData.onChange(function (products) {
         populateCategoryFilter(products);
         renderAll(products);
       });
-      renderAll(window.AdminData.all());
+      // load() is async and re-renders via onChange; handle failures clearly.
+      window.AdminData.load().catch(function (err) {
+        U.toast("Could not load products: " + (err && err.message ? err.message : "unknown error"), "error");
+        renderAll(window.AdminData.all());
+      });
     });
   }
 
